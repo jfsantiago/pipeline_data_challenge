@@ -49,10 +49,10 @@ una vez instaladas las dependencias correr el script main.py
 una vez ejecutado cualquier de los metodos, ya sea con docker o con python directamente, tendremos expuestas 4 url para 
 realizar las pruebas : 
 
-> http://0.0.0.0:8000/docs#/ -- Url de la API principal
-> http://0.0.0.0:8220/docs#/ -- Url del Easyjobs , manejador de workers
-> http://0.0.0.0:8221/docs -- Url del work ( esta vista no muestra nada, su trabajo lo recibe el manejador)
-> http://0.0.0.0:8000/graphql -- Url de GraphQL para probar consultas
+http://0.0.0.0:8000/docs#/ -- Url de la API principal <br>
+http://0.0.0.0:8220/docs#/ -- Url del Easyjobs , manejador de workers<br>
+http://0.0.0.0:8221/docs -- Url del work ( esta vista no muestra nada, su trabajo lo recibe el manejador)<br>
+http://0.0.0.0:8000/graphql -- Url de GraphQL para probar consultas<br>
 
 
 
@@ -96,6 +96,6 @@ ejecutar GRAPHQL
 
 URLS desplegadas en HEROKU
 
-https://api-challenge-pipeline.herokuapp.com/docs
-https://manager-pipeline-challenge.herokuapp.com/docs
-https://api-challenge-pipeline.herokuapp.com/graphql
+https://api-challenge-pipeline.herokuapp.com/docs<br>
+https://manager-pipeline-challenge.herokuapp.com/docs<br>
+https://api-challenge-pipeline.herokuapp.com/graphql<br>
