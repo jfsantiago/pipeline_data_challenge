@@ -12,23 +12,14 @@ debe tener una cuenta creada en heroku y descargar el cliente de heroku luego:
     heroku container:release web -a  nombre_app  #esto despliega
 
 
+# INSTALACION [LINUX-MACOS][CON DOCKER][LOCALMENTE]
+1: tener instalado docker-compose
 
+clonar el proyecto y en la carpeta ejecutar
+> docker-compose up
 
-# INSTALACION [LINUX][CON DOCKER][LOCALMENTE]
-1: tener instalado docker
-
-clonar el proyecto y en la carpeta al nivel del Dockerfile ejecutar el siguiente comando
-> docker build -t nombre_imagen .
-
-el punto indica que creara una imagen de docker apartir del Dockerfile que se encuentra
-en la ruta actual donde ejecuta el comando , una vez realizado esto la imagen estara creada
-y podra crear un contenedor de la api con el siguiente comando
-
-> docker run -p 8000:8000 nombre_app
-
-este comando ejecutara un container de la api , expuesto en el puerto 8000 de la maquina propia
-y por lo tanto ya podra dirigirse a la ruta http://localhost:8000 y al invocar este url en la raiz debe esperar a que cargue la api y podra ver los resultados del procesamiento de datos y si entra al contenedor podra ver que en los archivos , se creo automaticamente data.json y la base de datos postgresql siempre esta en funcionamiento en heroku, si desea conectarse a ella
-revisar el archivo .env donde se encuentran las credenciales
+Este comando creara contenedores donde encontraremos 3 servicios : El Api principal, Un Manager de works y un worker, 
+los cuales son necesarios para desarrollar el pipeline completo 
 
 
 # INSTALACION [LINUX][SIN DOCKER][LOCALMENTE]
@@ -51,16 +42,18 @@ una vez activado el entorno virtual debera instalar las dependencias por lo que 
 
 una vez instaladas las dependencias correr el script main.py  
 
-> python main.py  or python3 main.py
+> python /pipeline_challenge/main.py
+> python /job_manager/manager.py
+> python /job_worker/job_worker.py
 
-una vez ejecutado podra ir al url  http://127.0.0.1:8000/      y obtendra la respuesta en formato JSON de acuerdo a las especificaciones
+una vez ejecutado cualquier de los metodos, ya sea con docker o con python directamente, tendremos expuestas 4 url para 
+realizar las pruebas : 
 
+> http://0.0.0.0:8000/docs#/ -- Url de la API principal
+> http://0.0.0.0:8220/docs#/ -- Url del Easyjobs , manejador de workers
+> http://0.0.0.0:8221/docs -- Url del work ( esta vista no muestra nada, su trabajo lo recibe el manejador)
+> http://0.0.0.0:8000/graphql -- Url de GraphQL para probar consultas
 
-al hacer la solicitud de tipo GET en este endpoint , en su directorio local se generara un archivo data.json que tendra la informacion vista desde el navegador
-pero en un archivo JSON
-
-si desea tambien puede realizar la solicitud GET desde la linea de comandos 
-> curl http://127.0.0.1:8000/
 
 
 # TESTS [LINUX][SIN DOCKER][LOCALMENTE]
@@ -68,7 +61,7 @@ si desea tambien puede realizar la solicitud GET desde la linea de comandos
 una vez instalada las dependencias y el entorno virtual si realizo la instalacion
 sin docker ejecutar en la raiz del proyecto el siguiente comando
 
-> coverage run -m pytest tests
+> coverage run -m pytest /pipeline_challenge/tests
 
 
 # TESTS [LINUX][CON DOCKER][LOCALMENTE]
@@ -80,7 +73,7 @@ para ver los containers activos corriendo
 > docker ps 
 
 de este resultado tome el id del container y ejecute 
-> docker exec -ti id_container bash
+> docker exec -ti id_container[pipeline_challenge] bash
 
 una vez aqui podra ejecutar el comando de tests 
 
@@ -100,6 +93,9 @@ ejecutar GRAPHQL
             }
         }
 
-http://0.0.0.0:8000/graphql
-https://manager-pipeline-challenge.herokuapp.com/docs
+
+URLS desplegadas en HEROKU
+
 https://api-challenge-pipeline.herokuapp.com/docs
+https://manager-pipeline-challenge.herokuapp.com/docs
+https://api-challenge-pipeline.herokuapp.com/graphql

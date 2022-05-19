@@ -6,7 +6,7 @@ env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
 
 class Settings:
-    PROJECT_NAME:str = "API-COUNTRIES-FASTAPI"
+    PROJECT_NAME:str = "Api & Pipeline  - Tools [Python,Fastapi,Web scraping,Easyjobs,Postgres,Geopy,GraphQL,Pytest,Docker]"
     PROJECT_VERSION: str = "1.0.0"
 
     POSTGRES_USER : str = os.getenv("POSTGRES_USER")

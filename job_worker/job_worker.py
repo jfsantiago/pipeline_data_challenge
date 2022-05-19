@@ -5,7 +5,7 @@ import uvicorn
 import os
 server = FastAPI()
 
-environment = "DEV" #CA:MBIAR A DEV SI DESEA LOCALHOST
+environment = "DEV" #CAMBIAR A DEV SI DESEA LOCALHOST
 if environment == "PROD":
     manager_host='https://manager-pipeline-challenge.herokuapp.com'
     manager_port=443
@@ -43,15 +43,16 @@ async def setup():
 
 
     async def insert_delegaciones(url):
+        print(f"Iniciando proceso insert delegaciones...")
         timeout = httpx.Timeout(None)
         async with httpx.AsyncClient() as client:
            r = await client.get(url, timeout=timeout)
+        print(f"Proceso insert delegaciones finalizado correctamente...")
         return {'message': "insert_delegaciones finalizado correctamente"}
 
     @worker.task(schedule=every_minute)
     async def extract():
         url = f"{api_url}/api/v1/insert_vehicles"
-        print("entreeeeeeeeee")
         print(f"PROCESO DE INSERCION INICIADO...")
         await get_data(url)
         url = f"{api_url}/api/v1/insert_delegaciones"
@@ -59,8 +60,6 @@ async def setup():
         print(f"PROCESO DE INSERCION FINALIZADO...")
         return {'data': "INSERCION DE DATOS FINALIZADA CORRECTAMENTE"}
 
-    
-    
     
 
 if __name__=="__main__":
